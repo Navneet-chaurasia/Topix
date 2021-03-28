@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_signin_button/button_list.dart';
 import 'package:flutter_signin_button/button_view.dart';
 import 'package:topix/Auth/AuthBottomsSheet.dart';
+import 'package:topix/Auth/AuthServices.dart';
 import 'package:topix/Auth/UserInfo.dart';
 
 ///this is a drawer of app with some actions
@@ -57,6 +58,10 @@ class _TopixDrawerState extends State<TopixDrawer> {
               title: Text("Settings"),
             ),
             ListTile(
+              leading: Icon(Icons.logout),
+              onTap: () {
+                AuthServices.logout(context);
+              },
               title: Text("Logout"),
             ),
           ],
