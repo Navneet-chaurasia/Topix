@@ -17,7 +17,10 @@ class Topix extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       title: 'Topix',
       theme: ThemeData(
-        primarySwatch: Colors.blueGrey,
+        brightness: Brightness.light,
+        primaryColor: Colors.white,
+        primarySwatch: Colors.blue,
+        accentColor: Colors.white,
       ),
       home: Navigation(),
     );

@@ -3,6 +3,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:google_sign_in/google_sign_in.dart';
+import 'package:topix/primaries/Navigation.dart';
 
 import 'UserInfo.dart';
 
@@ -73,6 +74,28 @@ class AuthServices {
 
       return false;
     }
+  }
+
+  ///logout method
+  static void logout(context) async {
+    //set isLoggedIn false
+    TopixUserInfo.loginStatus = false;
+
+    GoogleSignIn googleSignIn = new GoogleSignIn();
+    FirebaseAuth auth = FirebaseAuth.instance;
+
+    await auth.signOut();
+    await googleSignIn.signOut();
+
+    await TopixUserInfo.intializeUser(context);
+
+//I am calling main method , so that app will be restarted
+//i dont know if it is a right practice
+
+    Navigator.of(context).pushAndRemoveUntil(
+        new MaterialPageRoute(builder: (BuildContext context) {
+      return new Navigation();
+    }), (Route<dynamic> route) => false);
   }
 
   ///this will set user data in database (firestore)

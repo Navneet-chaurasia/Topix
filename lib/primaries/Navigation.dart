@@ -18,32 +18,6 @@ class _NavigationState extends State<Navigation> {
   bool isUserInfoLoaded = false;
 
   int _selectedIndex = 0;
-  static const TextStyle optionStyle =
-      TextStyle(fontSize: 30, fontWeight: FontWeight.bold);
-  static const List<Widget> _widgetOptions = <Widget>[
-    Text(
-      'For You',
-      style: optionStyle,
-    ),
-    Text(
-      'Search',
-      style: optionStyle,
-    ),
-    Text(
-      'Topics',
-      style: optionStyle,
-    ),
-    Text(
-      'Me',
-      style: optionStyle,
-    ),
-  ];
-
-  void _onItemTapped(int index) {
-    setState(() {
-      _selectedIndex = index;
-    });
-  }
 
   @override
   void initState() {
@@ -63,42 +37,64 @@ class _NavigationState extends State<Navigation> {
   Widget build(BuildContext context) {
     return isUserInfoLoaded == false
         ? SpinKitWave(color: Colors.black)
-        : Scaffold(
-            appBar: AppBar(
-              elevation: 0,
-              title: const Text('Topix'),
-            ),
+        : DefaultTabController(
+            length: 4,
+            initialIndex: 0,
+            child: Scaffold(
+              appBar: AppBar(
+                title: Align(
+                    alignment: Alignment.centerRight, child: Text("Topix")),
+                elevation: 0,
+              ),
+              drawer: TopixDrawer(),
+              body: TabBarView(
+                physics: NeverScrollableScrollPhysics(),
+                children: [
+                  Text(
+                    'For You',
+                  ),
+                  Text(
+                    'Search',
+                  ),
+                  Text(
+                    'Topics',
+                  ),
+                  Text(
+                    'Me',
+                  ),
+                ],
+              ),
+              bottomNavigationBar: BottomAppBar(
+                shape: CircularNotchedRectangle(),
+                child: TabBar(
+                  onTap: (i) {
+                    //Utilities.temp();
 
-            //drawer
-            drawer: TopixDrawer(),
-            body: Center(
-              child: _widgetOptions.elementAt(_selectedIndex),
-            ),
-            bottomNavigationBar: BottomNavigationBar(
-              items: const <BottomNavigationBarItem>[
-                BottomNavigationBarItem(
-                  icon: Icon(Icons.home),
-                  label: 'For You',
+                    //update notifications state
+                    print(i);
+                  },
+                  tabs: <Widget>[
+                    Tab(
+                      icon: new Icon(Icons.home),
+                    ),
+                    Tab(
+                      icon: Icon(
+                        Icons.search,
+                      ),
+                    ),
+                    Tab(
+                      icon: Icon(
+                        Icons.topic,
+                        size: 35,
+                      ),
+                    ),
+                    Tab(icon: Icon(Icons.account_circle)),
+                  ],
+                  labelColor: Colors.blue,
+                  unselectedLabelColor: Colors.grey,
+                  indicatorColor: Colors.transparent,
                 ),
-                BottomNavigationBarItem(
-                  icon: Icon(Icons.search),
-                  label: 'Search',
-                ),
-                BottomNavigationBarItem(
-                  icon: Icon(Icons.topic),
-                  label: 'Topics',
-                ),
-                BottomNavigationBarItem(
-                  icon: Icon(Icons.account_box),
-                  label: 'Me',
-                ),
-              ],
-              unselectedItemColor: Colors.grey,
-              unselectedLabelStyle: TextStyle(color: Colors.black),
-              currentIndex: _selectedIndex,
-              selectedItemColor: Colors.amber[800],
-              onTap: _onItemTapped,
-            ),
-          );
+              ),
+            ));
   }
 }
