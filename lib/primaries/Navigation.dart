@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:topix/commonWidgets/drawer.dart';
 
 ///## this is navigation widget
 /// **top widget for everything**
@@ -16,15 +17,19 @@ class _NavigationState extends State<Navigation> {
       TextStyle(fontSize: 30, fontWeight: FontWeight.bold);
   static const List<Widget> _widgetOptions = <Widget>[
     Text(
-      'Index 0: Navigation',
+      'For You',
       style: optionStyle,
     ),
     Text(
-      'Index 1: Business',
+      'Search',
       style: optionStyle,
     ),
     Text(
-      'Index 2: School',
+      'Topics',
+      style: optionStyle,
+    ),
+    Text(
+      'Me',
       style: optionStyle,
     ),
   ];
@@ -39,24 +44,12 @@ class _NavigationState extends State<Navigation> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        elevation: 0,
         title: const Text('Topix'),
       ),
 
       //drawer
-      drawer: Drawer(
-        child: Center(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: <Widget>[
-              const Text('This is the Drawer'),
-              ElevatedButton(
-                onPressed: null,
-                child: const Text('Close Drawer'),
-              ),
-            ],
-          ),
-        ),
-      ),
+      drawer: TopixDrawer(),
       body: Center(
         child: _widgetOptions.elementAt(_selectedIndex),
       ),
@@ -64,17 +57,23 @@ class _NavigationState extends State<Navigation> {
         items: const <BottomNavigationBarItem>[
           BottomNavigationBarItem(
             icon: Icon(Icons.home),
-            label: 'Navigation',
+            label: 'For You',
           ),
           BottomNavigationBarItem(
-            icon: Icon(Icons.business),
-            label: 'Business',
+            icon: Icon(Icons.search),
+            label: 'Search',
           ),
           BottomNavigationBarItem(
-            icon: Icon(Icons.school),
-            label: 'School',
+            icon: Icon(Icons.topic),
+            label: 'Topics',
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.account_box),
+            label: 'Me',
           ),
         ],
+        unselectedItemColor: Colors.grey,
+        unselectedLabelStyle: TextStyle(color: Colors.black),
         currentIndex: _selectedIndex,
         selectedItemColor: Colors.amber[800],
         onTap: _onItemTapped,
