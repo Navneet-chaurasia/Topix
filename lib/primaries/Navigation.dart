@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
+import 'package:topix/Auth/UserInfo.dart';
 import 'package:topix/commonWidgets/drawer.dart';
 
 ///## this is navigation widget
@@ -12,6 +14,9 @@ class Navigation extends StatefulWidget {
 }
 
 class _NavigationState extends State<Navigation> {
+  ///is user info loaded
+  bool isUserInfoLoaded = false;
+
   int _selectedIndex = 0;
   static const TextStyle optionStyle =
       TextStyle(fontSize: 30, fontWeight: FontWeight.bold);
@@ -41,43 +46,59 @@ class _NavigationState extends State<Navigation> {
   }
 
   @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        elevation: 0,
-        title: const Text('Topix'),
-      ),
+  void initState() {
+    getUserInfo();
+    super.initState();
+  }
 
-      //drawer
-      drawer: TopixDrawer(),
-      body: Center(
-        child: _widgetOptions.elementAt(_selectedIndex),
-      ),
-      bottomNavigationBar: BottomNavigationBar(
-        items: const <BottomNavigationBarItem>[
-          BottomNavigationBarItem(
-            icon: Icon(Icons.home),
-            label: 'For You',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.search),
-            label: 'Search',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.topic),
-            label: 'Topics',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.account_box),
-            label: 'Me',
-          ),
-        ],
-        unselectedItemColor: Colors.grey,
-        unselectedLabelStyle: TextStyle(color: Colors.black),
-        currentIndex: _selectedIndex,
-        selectedItemColor: Colors.amber[800],
-        onTap: _onItemTapped,
-      ),
-    );
+  getUserInfo() async {
+    if (await TopixUserInfo.intializeUser(context)) {
+      setState(() {
+        isUserInfoLoaded = true;
+      });
+    }
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return isUserInfoLoaded == false
+        ? SpinKitWave(color: Colors.black)
+        : Scaffold(
+            appBar: AppBar(
+              elevation: 0,
+              title: const Text('Topix'),
+            ),
+
+            //drawer
+            drawer: TopixDrawer(),
+            body: Center(
+              child: _widgetOptions.elementAt(_selectedIndex),
+            ),
+            bottomNavigationBar: BottomNavigationBar(
+              items: const <BottomNavigationBarItem>[
+                BottomNavigationBarItem(
+                  icon: Icon(Icons.home),
+                  label: 'For You',
+                ),
+                BottomNavigationBarItem(
+                  icon: Icon(Icons.search),
+                  label: 'Search',
+                ),
+                BottomNavigationBarItem(
+                  icon: Icon(Icons.topic),
+                  label: 'Topics',
+                ),
+                BottomNavigationBarItem(
+                  icon: Icon(Icons.account_box),
+                  label: 'Me',
+                ),
+              ],
+              unselectedItemColor: Colors.grey,
+              unselectedLabelStyle: TextStyle(color: Colors.black),
+              currentIndex: _selectedIndex,
+              selectedItemColor: Colors.amber[800],
+              onTap: _onItemTapped,
+            ),
+          );
   }
 }

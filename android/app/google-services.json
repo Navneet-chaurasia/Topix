@@ -14,6 +14,14 @@
       },
       "oauth_client": [
         {
+          "client_id": "1065751214411-9ioquodnhlhhc4p8d8b9no2ocielsdv0.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.topix",
+            "certificate_hash": "e28cbb0a6c2485246b6e7efdff2c7deaacdc81b0"
+          }
+        },
+        {
           "client_id": "1065751214411-j1dvvc5a97geffke8tsjtpu9s07tr95g.apps.googleusercontent.com",
           "client_type": 3
         }

@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:topix/Auth/AuthBottomsSheet.dart';
+import 'package:topix/Auth/UserInfo.dart';
 
 ///this is a drawer of app with some actions
 class TopixDrawer extends StatefulWidget {
@@ -14,17 +16,31 @@ class _TopixDrawerState extends State<TopixDrawer> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.start,
           children: <Widget>[
-            UserAccountsDrawerHeader(
-              accountName: Text("Navneet chaurasia"),
-              accountEmail: Text("Navneetc486@gmail.com"),
-              currentAccountPicture: CircleAvatar(
-                backgroundColor: Colors.white,
-                child: Text(
-                  "N",
-                  style: TextStyle(fontSize: 40.0),
-                ),
-              ),
-            ),
+            TopixUserInfo.loginStatus
+                ? UserAccountsDrawerHeader(
+                    accountName: Text(TopixUserInfo.userName),
+                    accountEmail: Text(TopixUserInfo.userEmail),
+                    currentAccountPicture: CircleAvatar(
+                      backgroundColor: Colors.white,
+                      backgroundImage: NetworkImage(TopixUserInfo.userPic),
+                    ),
+                  )
+                : Container(
+                    height: 200,
+                    width: double.infinity,
+                    child: ElevatedButton(
+                      onPressed: () {
+                        TopixAuth.showBotttomSheet(context);
+                      },
+                      child: Text(
+                        "Sign In",
+                        style: TextStyle(
+                            color: Colors.white,
+                            fontSize: 17,
+                            fontWeight: FontWeight.bold),
+                      ),
+                    ),
+                  ),
             ListTile(
               title: Text("Option 1 "),
             ),
