@@ -78,47 +78,26 @@ class _TopixAuthBottomSheetState extends State<TopixAuthBottomSheet> {
                 padding: const EdgeInsets.only(
                     left: 20.0, right: 20, top: 10, bottom: 100),
                 child: Center(
-                    child: defaultTargetPlatform == TargetPlatform.android
-                        ? SignInButton(
-                            Buttons.Google,
-                            text: "continue with Google",
-                            onPressed: () async {
-                              setState(() {
-                                _loading = !_loading;
-                              });
-                              if (await AuthServices.signInWithGoogle(
-                                  context)) {
-                                Navigator.of(context).pushAndRemoveUntil(
-                                    new MaterialPageRoute(
-                                        builder: (BuildContext context) {
-                                  return Navigation();
-                                }), (Route<dynamic> route) => false);
-                              }
+                    child: SignInButton(
+                  Buttons.Google,
+                  text: "continue with Google",
+                  onPressed: () async {
+                    setState(() {
+                      _loading = !_loading;
+                    });
+                    if (await AuthServices.signInWithGoogle(context)) {
+                      Navigator.of(context).pushAndRemoveUntil(
+                          new MaterialPageRoute(
+                              builder: (BuildContext context) {
+                        return Navigation();
+                      }), (Route<dynamic> route) => false);
+                    }
 
-                              setState(() {
-                                _loading = !_loading;
-                              });
-                            },
-                          )
-                        : ElevatedButton(
-                            onPressed: () async {
-                              setState(() {
-                                _loading = !_loading;
-                              });
-                              if (await AuthServices.signInWithGoogle(
-                                  context)) {
-                                Navigator.of(context).pushAndRemoveUntil(
-                                    new MaterialPageRoute(
-                                        builder: (BuildContext context) {
-                                  return Navigation();
-                                }), (Route<dynamic> route) => false);
-                              }
-
-                              setState(() {
-                                _loading = !_loading;
-                              });
-                            },
-                            child: Text("Sign in with Google"))),
+                    setState(() {
+                      _loading = !_loading;
+                    });
+                  },
+                )),
               ),
               Spacer(),
               Padding(

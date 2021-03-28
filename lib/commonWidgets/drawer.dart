@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_signin_button/button_list.dart';
+import 'package:flutter_signin_button/button_view.dart';
 import 'package:topix/Auth/AuthBottomsSheet.dart';
 import 'package:topix/Auth/UserInfo.dart';
 
@@ -25,20 +27,14 @@ class _TopixDrawerState extends State<TopixDrawer> {
                       backgroundImage: NetworkImage(TopixUserInfo.userPic),
                     ),
                   )
-                : Container(
-                    height: 200,
-                    width: double.infinity,
-                    child: ElevatedButton(
-                      onPressed: () {
+                : Padding(
+                    padding: const EdgeInsets.only(top: 50.0, bottom: 50),
+                    child: SignInButton(
+                      Buttons.Google,
+                      text: "Sign in with Google",
+                      onPressed: () async {
                         TopixAuth.showBotttomSheet(context);
                       },
-                      child: Text(
-                        "Sign In",
-                        style: TextStyle(
-                            color: Colors.white,
-                            fontSize: 17,
-                            fontWeight: FontWeight.bold),
-                      ),
                     ),
                   ),
             ListTile(

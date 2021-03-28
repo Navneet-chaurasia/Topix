@@ -52,11 +52,11 @@ class _NavigationState extends State<Navigation> {
   }
 
   getUserInfo() async {
-    if (await TopixUserInfo.intializeUser(context)) {
-      setState(() {
-        isUserInfoLoaded = true;
-      });
-    }
+    await TopixUserInfo.intializeUser(context);
+    print("hii");
+    setState(() {
+      isUserInfoLoaded = true;
+    });
   }
 
   @override
