@@ -17,38 +17,38 @@ class TopixUserInfo {
 
   static intializeUser(context) async {
     FirebaseAuth auth = FirebaseAuth.instance;
-    User user = auth.currentUser;
+    Stream<User> user = auth.authStateChanges();
+    user.listen((u) async {
+      print(u);
+      if (u == null) {
+        loginStatus = false;
+      } else {
+        loginStatus = true;
+        userid = u.uid;
+        print(u.displayName);
+        return await FirebaseFirestore.instance
+            .collection('User')
+            .doc(u.uid)
+            .get()
+            .then((value) async {
+          if (value.exists) {
+            userName = value.data()['username'];
+            userid = value.data()['userid'];
+            userEmail = value.data()['email'];
+            userPic = value.data()['userPic'];
 
-    if (user == null) {
-      loginStatus = false;
+            bio = value.data()['bio'];
 
-      return true;
-    } else {
-      loginStatus = true;
-      userid = user.uid;
+            return true;
+          } else {
+            //if user has been deleted by admins or whatever although his data exists in database
+            //still set login = false;
 
-      return await FirebaseFirestore.instance
-          .collection('User')
-          .doc(user.uid)
-          .get()
-          .then((value) async {
-        if (value.exists) {
-          userName = value.data()['username'];
-          userid = value.data()['userid'];
-          userEmail = value.data()['email'];
-          userPic = value.data()['userPic'];
-
-          bio = value.data()['bio'];
-
-          return true;
-        } else {
-          //if user has been deleted by admins or whatever although his data exists in database
-          //still set login = false;
-
-          loginStatus = false;
-          return true;
-        }
-      });
-    }
+            loginStatus = false;
+            return true;
+          }
+        });
+      }
+    });
   }
 }
