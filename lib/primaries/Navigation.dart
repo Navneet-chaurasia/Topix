@@ -69,9 +69,6 @@ class _NavigationState extends State<Navigation> {
                 child: TabBar(
                   onTap: (i) {
                     //Utilities.temp();
-
-                    //update notifications state
-                    print(i);
                   },
                   tabs: <Widget>[
                     Tab(

@@ -19,13 +19,12 @@ class TopixUserInfo {
     FirebaseAuth auth = FirebaseAuth.instance;
     Stream<User> user = auth.authStateChanges();
     user.listen((u) async {
-      print(u);
       if (u == null) {
         loginStatus = false;
       } else {
         loginStatus = true;
         userid = u.uid;
-        print(u.displayName);
+
         return await FirebaseFirestore.instance
             .collection('User')
             .doc(u.uid)
