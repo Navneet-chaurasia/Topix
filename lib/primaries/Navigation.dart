@@ -2,6 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:topix/Auth/UserInfo.dart';
 import 'package:topix/commonWidgets/drawer.dart';
+import 'package:topix/screens/ExploreNews.dart';
+import 'package:topix/screens/fake_news_detector.dart';
+import 'package:topix/screens/forYouPage.dart';
 
 ///## this is navigation widget
 /// **top widget for everything**
@@ -13,11 +16,10 @@ class Navigation extends StatefulWidget {
   _NavigationState createState() => _NavigationState();
 }
 
-class _NavigationState extends State<Navigation> {
+class _NavigationState extends State<Navigation>
+    with AutomaticKeepAliveClientMixin {
   ///is user info loaded
   bool isUserInfoLoaded = false;
-
-  int _selectedIndex = 0;
 
   @override
   void initState() {
@@ -26,8 +28,11 @@ class _NavigationState extends State<Navigation> {
   }
 
   getUserInfo() async {
+    setState(() {
+      isUserInfoLoaded = false;
+    });
     await TopixUserInfo.intializeUser(context);
-    print("hii");
+    //print("hii");
     setState(() {
       isUserInfoLoaded = true;
     });
@@ -35,6 +40,7 @@ class _NavigationState extends State<Navigation> {
 
   @override
   Widget build(BuildContext context) {
+    super.build(context);
     return isUserInfoLoaded == false
         ? SpinKitWave(color: Colors.black)
         : DefaultTabController(
@@ -42,23 +48,17 @@ class _NavigationState extends State<Navigation> {
             initialIndex: 0,
             child: Scaffold(
               appBar: AppBar(
-                title: Align(
-                    alignment: Alignment.centerRight, child: Text("Topix")),
+                title: Text("Topix"),
                 elevation: 0,
+                centerTitle: true,
               ),
               drawer: TopixDrawer(),
               body: TabBarView(
                 physics: NeverScrollableScrollPhysics(),
                 children: [
-                  Text(
-                    'For You',
-                  ),
-                  Text(
-                    'Search',
-                  ),
-                  Text(
-                    'Topics',
-                  ),
+                  ForYouPage(),
+                  FNDetector(),
+                  ExploreNews(),
                   Text(
                     'Me',
                   ),
@@ -94,4 +94,7 @@ class _NavigationState extends State<Navigation> {
               ),
             ));
   }
+
+  @override
+  bool get wantKeepAlive => true;
 }

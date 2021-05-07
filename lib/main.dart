@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:topix/primaries/Navigation.dart';
 import 'package:firebase_core/firebase_core.dart';
 
+import 'screens/searchScreen.dart';
+
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
@@ -17,11 +19,13 @@ class Topix extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       title: 'Topix',
       theme: ThemeData(
+        fontFamily: "BreeSerif",
         brightness: Brightness.light,
         primaryColor: Colors.white,
         primarySwatch: Colors.blue,
         accentColor: Colors.white,
       ),
+      routes: {'/search': (context) => SearchBar()},
       home: Navigation(),
     );
   }

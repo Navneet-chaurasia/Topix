@@ -18,7 +18,9 @@ class TopixUserInfo {
   static intializeUser(context) async {
     FirebaseAuth auth = FirebaseAuth.instance;
     Stream<User> user = auth.authStateChanges();
+
     user.listen((u) async {
+      print(u);
       if (u == null) {
         loginStatus = false;
       } else {
@@ -37,7 +39,7 @@ class TopixUserInfo {
             userPic = value.data()['userPic'];
 
             bio = value.data()['bio'];
-
+            print(userName);
             return true;
           } else {
             //if user has been deleted by admins or whatever although his data exists in database
