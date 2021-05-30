@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:http/http.dart' as http;
 
 ///this class contains some static methods
@@ -7,19 +9,37 @@ class DetectFakeNews {
   ///this functions return future resposne
   ///true or false
   ///whether news is genuine or not
+  // static Future<http.Response> analyze(String q) async {
+  //   return http.post(
+  //     Uri.https('dawg-fake-news-detector.p.rapidapi.com', 'predict'),
+  //     headers: <String, String>{
+  //       "content-type": "application/x-www-form-urlencoded",
+  //       "x-rapidapi-key": "4b59b321b3mshebb7ee805dbbeb1p116dcdjsna564225410d6",
+  //       "x-rapidapi-host": "dawg-fake-news-detector.p.rapidapi.com",
+  //       "useQueryString": "true"
+  //     },
+  //     body: <String, String>{
+  //       'text': q,
+  //     },
+  //   ).catchError((onError) {
+  //     print(onError);
+  //   });
+  // }
+
   static Future<http.Response> analyze(String q) async {
-    return http.post(
-      Uri.https('dawg-fake-news-detector.p.rapidapi.com', 'predict'),
+    print(q);
+
+    return http
+        .post(
+      Uri.parse('http://localhost:5000/predict'),
       headers: <String, String>{
-        "content-type": "application/x-www-form-urlencoded",
-        "x-rapidapi-key": "4b59b321b3mshebb7ee805dbbeb1p116dcdjsna564225410d6",
-        "x-rapidapi-host": "dawg-fake-news-detector.p.rapidapi.com",
-        "useQueryString": "true"
+        'Content-Type': 'application/json; charset=UTF-8',
       },
-      body: <String, String>{
+      body: jsonEncode(<String, String>{
         'text': q,
-      },
-    ).catchError((onError) {
+      }),
+    )
+        .catchError((onError) {
       print(onError);
     });
   }
