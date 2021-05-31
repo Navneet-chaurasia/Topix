@@ -44,7 +44,7 @@ class _NavigationState extends State<Navigation>
     return isUserInfoLoaded == false
         ? SpinKitWave(color: Colors.black)
         : DefaultTabController(
-            length: 4,
+            length: 3,
             initialIndex: 0,
             child: Scaffold(
               appBar: AppBar(
@@ -52,16 +52,13 @@ class _NavigationState extends State<Navigation>
                 elevation: 0,
                 centerTitle: true,
               ),
-              drawer: TopixDrawer(),
+              // drawer: TopixDrawer(),
               body: TabBarView(
                 physics: NeverScrollableScrollPhysics(),
                 children: [
                   ForYouPage(),
                   FNDetector(),
                   ExploreNews(),
-                  Text(
-                    'Me',
-                  ),
                 ],
               ),
               bottomNavigationBar: BottomAppBar(
@@ -85,7 +82,6 @@ class _NavigationState extends State<Navigation>
                         size: 35,
                       ),
                     ),
-                    Tab(icon: Icon(Icons.account_circle)),
                   ],
                   labelColor: Colors.blue,
                   unselectedLabelColor: Colors.grey,
